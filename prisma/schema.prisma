@@ -1,0 +1,70 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ===== MODELS =====
+
+model User {
+  id            Int        @id @default(autoincrement())
+  username      String
+  email         String
+  password      String
+  role          String     @default("user")
+  profile_image String? 
+  image         String?
+  borrowings    Borrowing[]
+
+  @@map("users")
+}
+
+model Book {
+  id             Int         @id @default(autoincrement())
+  title          String
+  author         String
+  publisher      Publisher?  @relation(fields: [publisher_id], references: [id])
+  publisher_id   Int?
+  category       Category?   @relation(fields: [category_id], references: [id])
+  category_id    Int?
+  year_published Int?
+  stock          Int         @default(1)
+  image          String?
+  progress       Int         @default(0)
+  borrowings     Borrowing[]
+
+  @@map("books")
+}
+
+model Borrowing {
+  id          Int      @id @default(autoincrement())
+  book        Book     @relation(fields: [book_id], references: [id])
+  book_id     Int
+  user        User     @relation(fields: [user_id], references: [id])
+  user_id     Int
+  borrow_date DateTime
+  return_date DateTime?
+  status      String   @default("dipinjam")
+
+  @@map("borrowings")
+}
+
+model Publisher {
+  id    Int     @id @default(autoincrement())
+  name  String
+  books Book[]
+
+  @@map("publishers")
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String
+  books Book[]
+
+  @@map("categories")
+}
