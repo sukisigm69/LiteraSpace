@@ -3,12 +3,10 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import {
-  User,
   Mail,
   Shield,
   Calendar,
   LogOut,
-  Edit2,
   BookOpen,
   ArrowLeft,
   Home,
@@ -112,15 +110,8 @@ export default function ProfilePage() {
           {/* 🔘 BUTTONS */}
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={() => router.push("/edit-profile")}
+              onClick={() => router.push("/")}
               className="flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition"
-            >
-              <Edit2 className="w-4 h-4" /> Edit Profil
-            </button>
-
-            <button
-              onClick={() => router.push("/home")}
-              className="flex items-center justify-center gap-2 bg-green-600 text-white px-6 py-3 rounded-xl hover:bg-green-700 transition"
             >
               <Home className="w-4 h-4" /> Beranda
             </button>
